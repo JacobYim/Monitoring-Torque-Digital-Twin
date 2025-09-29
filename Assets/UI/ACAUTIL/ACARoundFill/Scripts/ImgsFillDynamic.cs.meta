@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9538591a4fbab5046a09f20da5ca2ca0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 174734
+  packageName: Simple Round Gauge
+  packageVersion: 1.1
+  assetPath: Assets/ACAUTIL/ACARoundFill/Scripts/ImgsFillDynamic.cs
+  uploadId: 380448
