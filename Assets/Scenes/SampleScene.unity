@@ -1399,7 +1399,7 @@ ArticulationBody:
     m_Bits: 0
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
-  m_Immovable: 0
+  m_Immovable: 1
   m_UseGravity: 1
   m_CollisionDetectionMode: 0
 --- !u!114 &336059154
@@ -1414,7 +1414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba5fd74d37a6cf4284698624eb8f6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsBaseLink: 0
+  IsBaseLink: 1
 --- !u!114 &336059155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3368,9 +3368,9 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: -157.21103
     upperLimit: 162.78934
-    stiffness: 0
-    damping: 0
-    forceLimit: 10
+    stiffness: 20
+    damping: 0.5
+    forceLimit: 20
     target: 0
     targetVelocity: 0
     driveType: 0
@@ -4213,9 +4213,9 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: -100.000046
     upperLimit: 100.000046
-    stiffness: 0
-    damping: 0
-    forceLimit: 10
+    stiffness: 50
+    damping: 0.5
+    forceLimit: 20
     target: 0
     targetVelocity: 0
     driveType: 0
@@ -5364,9 +5364,9 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: -94.99984
     upperLimit: 94.99984
-    stiffness: 0
-    damping: 0
-    forceLimit: 10
+    stiffness: 50
+    damping: 0.5
+    forceLimit: 20
     target: 0
     targetVelocity: 0
     driveType: 0
@@ -6098,8 +6098,8 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: 0
     upperLimit: 0
-    stiffness: 0
-    damping: 0
+    stiffness: 100
+    damping: 10
     forceLimit: 3.4028235e+38
     target: 0
     targetVelocity: 0
@@ -6511,9 +6511,9 @@ MonoBehaviour:
   selectedJoint: 
   selectedIndex: 0
   control: 0
-  stiffness: 0
-  damping: 0
-  forceLimit: 0
+  stiffness: 50
+  damping: 0.5
+  forceLimit: 20
   speed: 5
   torque: 100
   acceleration: 5
@@ -7496,9 +7496,9 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: -100.000046
     upperLimit: 90.00021
-    stiffness: 0
-    damping: 0
-    forceLimit: 10
+    stiffness: 50
+    damping: 0.5
+    forceLimit: 20
     target: 0
     targetVelocity: 0
     driveType: 0
@@ -7982,9 +7982,9 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: -109.99988
     upperLimit: 109.99988
-    stiffness: 0
-    damping: 0
-    forceLimit: 10
+    stiffness: 50
+    damping: 0.5
+    forceLimit: 20
     target: 0
     targetVelocity: 0
     driveType: 0
