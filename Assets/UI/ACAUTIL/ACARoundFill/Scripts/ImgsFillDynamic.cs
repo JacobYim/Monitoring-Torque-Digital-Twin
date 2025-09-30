@@ -25,6 +25,31 @@ public class ImgsFillDynamic : MonoBehaviour
     public float MultifyText = 100F;
     public string TailText = "%";
 
+		// Label shown above the circle
+    public Text TxtLabel;
+    public string LabelText = "Joint";
+    public bool AutoPlaceLabelAbove = true;
+    public float LabelMargin = 10f;
+
+    void Start()
+    {
+        // Initialize label text on start
+			this.SyncLabelText();
+    }
+
+		void OnEnable()
+		{
+			this.SyncLabelText();
+		}
+
+		#if UNITY_EDITOR
+		void OnValidate()
+		{
+			// Keep label preview in sync in the editor
+			this.SyncLabelText();
+		}
+		#endif
+
     /// <summary>
     /// USAGE:Set SetFillAmount
     /// </summary>
@@ -74,6 +99,11 @@ public class ImgsFillDynamic : MonoBehaviour
             this.SetTextFactor();
             this.SetImageColor();
         }
+
+			// Keep label text synced to LabelText
+			this.SyncLabelText();
+
+        // Keep label positioned above the circle if enabled
     }
 
     void SetTextFactor()
@@ -107,4 +137,33 @@ public class ImgsFillDynamic : MonoBehaviour
         for (int i = 0; i < this.ImgFacterTarget.Length; i++)
             this.ImgFacterTarget[i].color = this.PercentByColor[arr];
     }
+
+    public void SetLabel(string label)
+    {
+        this.LabelText = label;
+        if (this.TxtLabel != null)
+            this.TxtLabel.text = this.LabelText;
+    }
+
+    void UpdateLabelPosition()
+    {
+        if (this.TxtLabel == null) return;
+        if (this.ImgFacterTarget == null || this.ImgFacterTarget.Length == 0 || this.ImgFacterTarget[0] == null) return;
+
+        RectTransform circle = this.ImgFacterTarget[0].rectTransform;
+        RectTransform labelRT = this.TxtLabel.rectTransform;
+
+        // Assume same parent and anchored positioning
+        Vector2 newPos = labelRT.anchoredPosition;
+        newPos.x = circle.anchoredPosition.x;
+        newPos.y = circle.anchoredPosition.y + (circle.sizeDelta.y * 0.5f) + this.LabelMargin;
+        labelRT.anchoredPosition = newPos;
+    }
+
+		void SyncLabelText()
+		{
+			if (this.TxtLabel == null) return;
+			if (this.TxtLabel.text != this.LabelText)
+				this.TxtLabel.text = this.LabelText;
+		}
 }
