@@ -1,0 +1,63 @@
+{
+    "jointUIPairs": [
+        {
+            "jointPath": "so100/base/shoulder",
+            "targetUIPath": "Canvas/Shoulder Pan",
+            "label": "Shoulder Pan",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        },
+        {
+            "jointPath": "so100/base/shoulder/upper_arm",
+            "targetUIPath": "Canvas/Shoulder Lift",
+            "label": "Shoulder Lift",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        },
+        {
+            "jointPath": "so100/base/shoulder/upper_arm/lower_arm",
+            "targetUIPath": "Canvas/Elbow Flex",
+            "label": "Elbow Flex",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        },
+        {
+            "jointPath": "so100/base/shoulder/upper_arm/lower_arm",
+            "targetUIPath": "Canvas/Elbow Flex",
+            "label": "Elbow Flex",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        },
+        {
+            "jointPath": "so100/base/shoulder/upper_arm/lower_arm/wrist",
+            "targetUIPath": "Canvas/Wrist Flex",
+            "label": "Wrist Flex",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        },
+        {
+            "jointPath": "so100/base/shoulder/upper_arm/lower_arm/wrist/gripper",
+            "targetUIPath": "Canvas/Wrist Roll",
+            "label": "Wrist Roll",
+            "weight": 1.0,
+            "useAbsoluteValue": true,
+            "customMultiplier": 1.0,
+            "showDebug": false
+        }
+    ],
+    "updatesPerSecond": 30.0,
+    "accumulateValues": false,
+    "accumulatedTargetUIPath": "",
+    "accumulatedLabel": "Combined",
+    "showDebugInfo": false
+}
