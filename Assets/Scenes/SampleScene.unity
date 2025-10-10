@@ -2086,7 +2086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba5fd74d37a6cf4284698624eb8f6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsBaseLink: 0
+  IsBaseLink: 1
 --- !u!114 &336059155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10432,8 +10432,8 @@ ArticulationBody:
   m_XDrive:
     lowerLimit: 0
     upperLimit: 0
-    stiffness: 0
-    damping: 0
+    stiffness: 100
+    damping: 10
     forceLimit: 3.4028235e+38
     target: 0
     targetVelocity: 0
@@ -11475,9 +11475,9 @@ MonoBehaviour:
   selectedJoint: 
   selectedIndex: 0
   control: 0
-  stiffness: 0
-  damping: 0
-  forceLimit: 0
+  stiffness: 50
+  damping: 0.5
+  forceLimit: 20
   speed: 5
   torque: 100
   acceleration: 5
