@@ -103,3 +103,5 @@ venv/
 env/
 ENV/
 .venv/
+ProjectSettings/
+Packages/*.json
