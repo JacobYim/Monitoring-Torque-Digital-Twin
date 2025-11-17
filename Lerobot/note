@@ -1,0 +1,110 @@
+lerobot-find-port
+
+Follower
+'/dev/ttyACM0'
+
+Leader
+'/dev/ttyACM1'
+
+
+-----
+
+lerobot-setup-motors \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1
+
+lerobot-setup-motors \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0
+
+----
+
+lerobot-calibrate \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=jacob_learder_1
+
+lerobot-calibrate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=jacob_follwer_1 
+
+----
+
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=jacob_follwer_1  \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=jacob_learder_1
+----
+
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=jacob_follwer_1  \
+    --robot.cameras='{"front": {"type": "opencv", "index_or_path": 0, "width": 640, "height": 480, "fps": 30}, "wrist": {"type": "opencv", "index_or_path": 2, "width": 640, "height": 480, "fps": 30}}' \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=jacob_learder_1 \
+    --display_data=true \
+    --stream_data=true \
+    --stream_port=8765
+
+----
+# 단일 카메라 옵션 - 카메라 0만 사용 + VR 스트리밍
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=jacob_follwer_1  \
+    --robot.cameras='{"front": {"type": "opencv", "index_or_path": 0, "width": 640, "height": 480, "fps": 30}}' \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=jacob_learder_1 \
+    --display_data=true \
+    --stream_data=true \
+    --stream_port=8765
+
+# 단일 카메라 옵션 - 카메라 2만 사용 + VR 스트리밍
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=jacob_follwer_1  \
+    --robot.cameras='{"front": {"type": "opencv", "index_or_path": 2, "width": 640, "height": 480, "fps": 30}}' \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=jacob_learder_1 \
+    --display_data=true \
+    --stream_data=true \
+    --stream_port=8765
+
+----
+# VR 스트리밍 서버 - WebSocket을 통해 로봇 데이터를 VR(C#)로 전송
+python3 robot_data_stream_server.py --port /dev/ttyACM0 --ws-port 8765 --rate 30
+
+# 샘플 로봇 서버 (로봇 없이 테스트용)
+python3 sample_robot_server.py --scenario normal --rate 30
+python3 sample_robot_server.py --scenario idle
+python3 sample_robot_server.py --scenario moving
+python3 sample_robot_server.py --scenario heavy_load
+
+# WebSocket 모니터링 (실시간 UI)
+python3 monitor_websocket.py ws://localhost:8765
+
+# WebSocket 모니터링 (간단 버전)
+python3 monitor_websocket_simple.py ws://localhost:8765
+
+# 테스트 클라이언트
+python3 test_websocket_client.py ws://localhost:8765 10
+
+----
+lerobot-teleoperate \
+    --robot.type=koch_follower \
+    --robot.port=/dev/tty.usbmodem58760431541 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=koch_leader \
+    --teleop.port=/dev/tty.usbmodem58760431551 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true
