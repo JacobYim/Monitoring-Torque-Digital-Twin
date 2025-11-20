@@ -256,6 +256,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8676831514127599250}
     m_Modifications:
+    - target: {fileID: 292754100166390153, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 493122968537702033, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -286,22 +290,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1551000342452187128, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: 0.00000013113416
       objectReference: {fileID: 0}
     - target: {fileID: 1551000342452187128, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1551000342452187128, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000008742278
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1551000342452187128, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1720051308988880899, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1753643363058089434, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_Immovable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753643363058089434, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_CollisionDetectionMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554943358208598420, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3305592544573270718, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
@@ -351,6 +367,10 @@ PrefabInstance:
     - target: {fileID: 3501069901484690641, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_ParentAnchorRotation.y
       value: -0.500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3529042317125000929, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3660128784341847115, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_Name
@@ -436,6 +456,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5660298196199824888, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6407654178305727874, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_ParentAnchorPosition.x
       value: -0.00000001490116
@@ -484,9 +508,21 @@ PrefabInstance:
       propertyPath: m_ParentAnchorRotation.z
       value: -0.49999908
       objectReference: {fileID: 0}
+    - target: {fileID: 6822946518727176902, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7795156668029426067, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010331508651030828, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199536857810687069, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884640088779332720, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
       propertyPath: m_ParentAnchorPosition.x

@@ -2995,13 +2995,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1891673207}
     - target: {fileID: 4968769839778511794, guid: 8b4d02b4e05af714dab2a12548a310f8, type: 3}
+      propertyPath: m_MimickingPrefab
+      value: 
+      objectReference: {fileID: 3660128784341847115, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+    - target: {fileID: 4968769839778511794, guid: 8b4d02b4e05af714dab2a12548a310f8, type: 3}
       propertyPath: m_ObjectPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4968769839778511794, guid: 8b4d02b4e05af714dab2a12548a310f8, type: 3}
       propertyPath: 'm_ObjectPrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 3660128784341847115, guid: bfc2849b8966f4d0aa99798519e31eeb, type: 3}
+      objectReference: {fileID: 1667034717825686887, guid: b1c22562257fb46f0ac21ee3825f3507, type: 3}
     - target: {fileID: 4968769839778511794, guid: 8b4d02b4e05af714dab2a12548a310f8, type: 3}
       propertyPath: 'm_ObjectPrefabs.Array.data[1]'
       value: 

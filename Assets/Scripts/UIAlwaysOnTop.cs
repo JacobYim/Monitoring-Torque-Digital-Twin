@@ -58,13 +58,20 @@ public class UIAlwaysOnTop : MonoBehaviour
         if (useWorldSpace)
         {
             canvas.renderMode = RenderMode.WorldSpace;
+            
+            // Find camera if not assigned
+            if (worldCamera == null)
+            {
+                worldCamera = FindXRCamera();
+            }
+            
             if (worldCamera)
             {
                 canvas.worldCamera = worldCamera;
             }
-            else if (Camera.main)
+            else
             {
-                canvas.worldCamera = Camera.main;
+                Debug.LogWarning($"UIAlwaysOnTop on {gameObject.name}: No camera found. Please assign a camera or ensure Camera.main exists.", this);
             }
         }
         else
@@ -86,6 +93,55 @@ public class UIAlwaysOnTop : MonoBehaviour
         {
             SetUILayerRecursive(child.gameObject, layer);
         }
+    }
+
+    /// <summary>
+    /// Finds the XR camera automatically. Tries multiple methods to find the active XR camera.
+    /// </summary>
+    Camera FindXRCamera()
+    {
+        // Method 1: Try Camera.main (most common)
+        if (Camera.main != null)
+        {
+            return Camera.main;
+        }
+
+        // Method 2: Find camera tagged as MainCamera
+        GameObject mainCamObj = GameObject.FindGameObjectWithTag("MainCamera");
+        if (mainCamObj != null)
+        {
+            Camera cam = mainCamObj.GetComponent<Camera>();
+            if (cam != null) return cam;
+        }
+
+        // Method 3: Search for camera in XR Origin structure
+        // Look for "XR Origin" -> "Camera Offset" -> "Main Camera"
+        GameObject xrOrigin = GameObject.Find("XR Origin");
+        if (xrOrigin != null)
+        {
+            Transform cameraOffset = xrOrigin.transform.Find("Camera Offset");
+            if (cameraOffset != null)
+            {
+                Transform mainCam = cameraOffset.Find("Main Camera");
+                if (mainCam != null)
+                {
+                    Camera cam = mainCam.GetComponent<Camera>();
+                    if (cam != null) return cam;
+                }
+            }
+        }
+
+        // Method 4: Find any active camera in the scene
+        Camera[] allCameras = FindObjectsOfType<Camera>();
+        foreach (Camera cam in allCameras)
+        {
+            if (cam.enabled && cam.gameObject.activeInHierarchy)
+            {
+                return cam;
+            }
+        }
+
+        return null;
     }
 
     // Public methods for runtime control

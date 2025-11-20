@@ -42,6 +42,7 @@ public class SpawnedObjectsManager : MonoBehaviour
 
     void OnDestroyObjectsButtonClicked()
     {
+        // Clean up all spawned children
         foreach (Transform child in m_Spawner.transform)
         {
             Destroy(child.gameObject);

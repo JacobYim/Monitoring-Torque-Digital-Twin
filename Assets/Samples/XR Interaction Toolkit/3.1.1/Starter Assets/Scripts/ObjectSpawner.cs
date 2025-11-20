@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Utilities;
 
 namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
@@ -146,11 +147,65 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             set => m_SpawnAsChildren = value;
         }
 
+        [SerializeField]
+        [Tooltip("Optional prefab that will mimic/follow the position of the spawned object. This will be spawned when an object is spawned and removed when the object is removed.")]
+        GameObject m_MimickingPrefab;
+
+        /// <summary>
+        /// Optional prefab that will mimic/follow the position of the spawned object.
+        /// </summary>
+        public GameObject mimickingPrefab
+        {
+            get => m_MimickingPrefab;
+            set => m_MimickingPrefab = value;
+        }
+
+        [SerializeField]
+        [Tooltip("Whether the mimicking prefab should also follow the rotation of the spawned object.")]
+        bool m_MimicRotation = true;
+
+        /// <summary>
+        /// Whether the mimicking prefab should also follow the rotation of the spawned object.
+        /// </summary>
+        public bool mimicRotation
+        {
+            get => m_MimicRotation;
+            set => m_MimicRotation = value;
+        }
+
+        [SerializeField]
+        [Tooltip("Optional offset for the mimicking prefab position relative to the spawned object.")]
+        Vector3 m_MimickingOffset = Vector3.zero;
+
+        /// <summary>
+        /// Optional offset for the mimicking prefab position relative to the spawned object.
+        /// </summary>
+        public Vector3 mimickingOffset
+        {
+            get => m_MimickingOffset;
+            set => m_MimickingOffset = value;
+        }
+
         /// <summary>
         /// Event invoked after an object is spawned.
         /// </summary>
         /// <seealso cref="TrySpawnObject"/>
         public event Action<GameObject> objectSpawned;
+
+        /// <summary>
+        /// The currently spawned object, or null if none exists.
+        /// </summary>
+        GameObject m_SpawnedObject;
+
+        /// <summary>
+        /// The mimicking object that follows the spawned object, or null if none exists.
+        /// </summary>
+        GameObject m_MimickingObject;
+
+        /// <summary>
+        /// Cached ArticulationBody component of the mimicking object, if it has one.
+        /// </summary>
+        ArticulationBody m_MimickingArticulationBody;
 
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
@@ -179,6 +234,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         /// <summary>
         /// Attempts to spawn an object from <see cref="objectPrefabs"/> at the given position. The object will have a
         /// yaw rotation that faces <see cref="cameraToFace"/>, plus or minus a random angle within <see cref="spawnAngleRange"/>.
+        /// If an object is already spawned, tapping again will remove it instead of spawning a new one.
         /// </summary>
         /// <param name="spawnPoint">The world space position at which to spawn the object.</param>
         /// <param name="spawnNormal">The world space normal of the spawn surface.</param>
@@ -192,6 +248,21 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         /// <seealso cref="objectSpawned"/>
         public bool TrySpawnObject(Vector3 spawnPoint, Vector3 spawnNormal)
         {
+            // If an object is already spawned, remove it instead of spawning a new one
+            if (m_SpawnedObject != null)
+            {
+                // Remove the mimicking object if it exists
+                if (m_MimickingObject != null)
+                {
+                    Destroy(m_MimickingObject);
+                    m_MimickingObject = null;
+                }
+                m_MimickingArticulationBody = null;
+                Destroy(m_SpawnedObject);
+                m_SpawnedObject = null;
+                return false;
+            }
+
             if (m_OnlySpawnInView)
             {
                 var inViewMin = m_ViewportPeriphery;
@@ -230,8 +301,84 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 visualizationTrans.rotation = newObject.transform.rotation;
             }
 
+            // Track the spawned object
+            m_SpawnedObject = newObject;
+
+            // Spawn the mimicking prefab if one is set
+            if (m_MimickingPrefab != null)
+            {
+                m_MimickingObject = Instantiate(m_MimickingPrefab);
+                if (m_SpawnAsChildren)
+                    m_MimickingObject.transform.parent = transform;
+                
+                // Check if the mimicking object has an ArticulationBody
+                m_MimickingArticulationBody = m_MimickingObject.GetComponent<ArticulationBody>();
+                
+                // Set initial position and rotation
+                Vector3 targetPosition = newObject.transform.position + m_MimickingOffset;
+                Quaternion targetRotation = m_MimicRotation ? newObject.transform.rotation : m_MimickingObject.transform.rotation;
+                
+                if (m_MimickingArticulationBody != null)
+                {
+                    // Use TeleportRoot for ArticulationBody
+                    m_MimickingArticulationBody.TeleportRoot(targetPosition, targetRotation);
+                }
+                else
+                {
+                    // Use regular transform for non-articulation objects
+                    m_MimickingObject.transform.position = targetPosition;
+                    if (m_MimicRotation)
+                    {
+                        m_MimickingObject.transform.rotation = targetRotation;
+                    }
+                }
+            }
+
             objectSpawned?.Invoke(newObject);
             return true;
+        }
+
+        /// <summary>
+        /// See <see cref="MonoBehaviour"/>.
+        /// </summary>
+        void Update()
+        {
+            // Update the mimicking object's position and rotation to follow the spawned object
+            if (m_SpawnedObject != null && m_MimickingObject != null)
+            {
+                // Check if the spawned object still exists (might have been destroyed externally)
+                if (m_SpawnedObject != null)
+                {
+                    Vector3 targetPosition = m_SpawnedObject.transform.position + m_MimickingOffset;
+                    Quaternion targetRotation = m_MimicRotation ? m_SpawnedObject.transform.rotation : m_MimickingObject.transform.rotation;
+                    
+                    if (m_MimickingArticulationBody != null)
+                    {
+                        // Use TeleportRoot for ArticulationBody to move it
+                        m_MimickingArticulationBody.TeleportRoot(targetPosition, targetRotation);
+                    }
+                    else
+                    {
+                        // Use regular transform for non-articulation objects
+                        m_MimickingObject.transform.position = targetPosition;
+                        if (m_MimicRotation)
+                        {
+                            m_MimickingObject.transform.rotation = targetRotation;
+                        }
+                    }
+                }
+                else
+                {
+                    // Spawned object was destroyed externally, clean up mimicking object
+                    if (m_MimickingObject != null)
+                    {
+                        Destroy(m_MimickingObject);
+                        m_MimickingObject = null;
+                    }
+                    m_MimickingArticulationBody = null;
+                    m_SpawnedObject = null;
+                }
+            }
         }
     }
 }
