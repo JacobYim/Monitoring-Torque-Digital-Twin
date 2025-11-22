@@ -1802,6 +1802,7 @@ GameObject:
   - component: {fileID: 6390533066318661072}
   - component: {fileID: 7679888896255506767}
   - component: {fileID: 9075126453565583954}
+  - component: {fileID: 1234567890123456789}
   m_Layer: 0
   m_Name: SO100wUI
   m_TagString: Untagged
@@ -12545,3 +12546,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4856140355029720127, guid: 77ecd3f4cd83348cea6316af8e5d423e, type: 3}
   m_PrefabInstance: {fileID: 9151136689849840762}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1234567890123456789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660128784341847115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5504a08ad02042a6942d596a538516a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayUIOnRobot: {fileID: 5927763875593521767}
+  verticalUIWithLine: {fileID: 8427598691589738050}
+  horizontalUIWithFixedPlace: {fileID: 1591281832001815544}
+  displaySettingDropdown: {fileID: 0}
