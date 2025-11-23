@@ -18,6 +18,9 @@ public class DisplaySettingController : MonoBehaviour
     [Tooltip("Horizontal UI with Fixed Place (HUD 모드)")]
     public GameObject horizontalUIWithFixedPlace;
     
+    [Tooltip("Head Up Display GameObject (HUD 모드에서 활성화)")]
+    public GameObject headUpDisplay;
+    
     [Header("Dropdown Reference")]
     [Tooltip("Display Setting 드롭다운 (자동으로 찾을 수 있음)")]
     public TMP_Dropdown displaySettingDropdown;
@@ -43,6 +46,12 @@ public class DisplaySettingController : MonoBehaviour
     {
         // 초기 드롭다운 찾기 시도
         TryFindAndConnectDropdown();
+        
+        // Head Up Display 찾기 시도
+        if (headUpDisplay == null)
+        {
+            TryFindHeadUpDisplay();
+        }
         
         // 이미 드롭다운이 설정되어 있으면 현재 값으로 즉시 업데이트
         if (s_SharedDropdown != null)
@@ -194,6 +203,10 @@ public class DisplaySettingController : MonoBehaviour
         if (horizontalUIWithFixedPlace != null)
             horizontalUIWithFixedPlace.SetActive(false);
         
+        // Head Up Display 비활성화 (HUD 모드가 아닐 때)
+        if (headUpDisplay != null)
+            headUpDisplay.SetActive(false);
+        
         // 선택된 UI만 활성화
         switch (value)
         {
@@ -219,11 +232,61 @@ public class DisplaySettingController : MonoBehaviour
                     horizontalUIWithFixedPlace.SetActive(true);
                     Debug.Log("Display Setting: HUD - Horizontal UI with Fixed Place 활성화");
                 }
+                
+                // Head Up Display 활성화
+                if (headUpDisplay != null)
+                {
+                    headUpDisplay.SetActive(true);
+                    Debug.Log("Display Setting: HUD - Head Up Display 활성화");
+                }
+                else
+                {
+                    // 자동으로 찾기 시도
+                    TryFindHeadUpDisplay();
+                    if (headUpDisplay != null)
+                    {
+                        headUpDisplay.SetActive(true);
+                        Debug.Log("Display Setting: HUD - Head Up Display 자동 찾기 후 활성화");
+                    }
+                }
                 break;
                 
             default:
                 Debug.LogWarning($"DisplaySettingController: 알 수 없는 드롭다운 값: {value}");
                 break;
+        }
+    }
+    
+    /// <summary>
+    /// Head Up Display GameObject를 자동으로 찾는 메서드
+    /// </summary>
+    private void TryFindHeadUpDisplay()
+    {
+        if (headUpDisplay != null)
+            return;
+        
+        // "UI" GameObject 찾기
+        GameObject uiParent = GameObject.Find("UI");
+        if (uiParent != null)
+        {
+            // "Head Up Display" 자식 찾기
+            Transform hudTransform = uiParent.transform.Find("Head Up Display");
+            if (hudTransform != null)
+            {
+                headUpDisplay = hudTransform.gameObject;
+                Debug.Log("DisplaySettingController: Head Up Display GameObject를 찾았습니다.");
+            }
+        }
+        
+        // 직접 이름으로 찾기 시도
+        if (headUpDisplay == null)
+        {
+            GameObject foundHUD = GameObject.Find("Head Up Display");
+            if (foundHUD != null)
+            {
+                headUpDisplay = foundHUD;
+                Debug.Log("DisplaySettingController: Head Up Display GameObject를 직접 찾았습니다.");
+            }
         }
     }
     
@@ -239,6 +302,42 @@ public class DisplaySettingController : MonoBehaviour
         else
         {
             OnDisplaySettingChanged(mode);
+        }
+    }
+    
+    /// <summary>
+    /// Head Up Display를 비활성화하는 정적 메서드 (외부에서 호출 가능)
+    /// </summary>
+    public static void DisableHeadUpDisplay()
+    {
+        // 모든 인스턴스의 Head Up Display 비활성화
+        foreach (var instance in s_AllInstances)
+        {
+            if (instance != null && instance.headUpDisplay != null)
+            {
+                instance.headUpDisplay.SetActive(false);
+                Debug.Log("DisplaySettingController: Head Up Display 비활성화됨");
+            }
+        }
+        
+        // 인스턴스가 없거나 할당되지 않은 경우 직접 찾아서 비활성화
+        GameObject uiParent = GameObject.Find("UI");
+        if (uiParent != null)
+        {
+            Transform hudTransform = uiParent.transform.Find("Head Up Display");
+            if (hudTransform != null)
+            {
+                hudTransform.gameObject.SetActive(false);
+                Debug.Log("DisplaySettingController: Head Up Display 직접 찾아서 비활성화됨");
+            }
+        }
+        
+        // 직접 이름으로 찾기 시도
+        GameObject foundHUD = GameObject.Find("Head Up Display");
+        if (foundHUD != null)
+        {
+            foundHUD.SetActive(false);
+            Debug.Log("DisplaySettingController: Head Up Display 직접 찾아서 비활성화됨");
         }
     }
 }

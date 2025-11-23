@@ -317,6 +317,9 @@ public class GoalManager : MonoBehaviour
 
     public void ResetCoaching()
     {
+        // Head Up Display 비활성화
+        DisplaySettingController.DisableHeadUpDisplay();
+        
         m_CoachingUIParent.transform.localScale = Vector3.one;
 
         m_OnboardingGoals.Clear();
