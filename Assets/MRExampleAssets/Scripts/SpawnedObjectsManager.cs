@@ -42,6 +42,9 @@ public class SpawnedObjectsManager : MonoBehaviour
 
     void OnDestroyObjectsButtonClicked()
     {
+        // Head Up Display 비활성화
+        DisplaySettingController.DisableHeadUpDisplay();
+        
         // Clean up all spawned children
         foreach (Transform child in m_Spawner.transform)
         {
