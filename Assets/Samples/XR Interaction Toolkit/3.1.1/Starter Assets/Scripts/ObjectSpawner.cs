@@ -332,6 +332,20 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                         m_MimickingObject.transform.rotation = targetRotation;
                     }
                 }
+                
+                // Add PeriodicMovement component for sinusoidal joint rotation
+                // Find the "so100" child GameObject which contains the articulation bodies
+                Transform so100Child = m_MimickingObject.transform.Find("so100");
+                GameObject targetObject = so100Child != null ? so100Child.gameObject : m_MimickingObject;
+                
+                PeriodicMovement periodicMovement = targetObject.GetComponent<PeriodicMovement>();
+                if (periodicMovement == null)
+                {
+                    periodicMovement = targetObject.AddComponent<PeriodicMovement>();
+                    Debug.Log($"[ObjectSpawner] Added PeriodicMovement to {targetObject.name}");
+                }
+                // Ensure it's enabled
+                periodicMovement.enabled = true;
             }
 
             objectSpawned?.Invoke(newObject);
